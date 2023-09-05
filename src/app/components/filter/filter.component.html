@@ -1,1 +1,10 @@
-<p>filter works!</p>
+<label id="example-radio-group-label">Filter by:</label>
+<mat-radio-group
+  aria-labelledby="example-radio-group-label"
+  class="example-radio-group"
+  [(ngModel)]="selectedOption">
+  <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option">
+    {{option}}
+  </mat-radio-button>
+</mat-radio-group>
+<button class="action-button" (click)="onFilter()" mat-raised-button color="primary">Filter</button>
