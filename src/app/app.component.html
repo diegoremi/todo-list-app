@@ -1,11 +1,13 @@
 <mat-card>
+
   <mat-card-actions>
     <app-filter (onFilterEvent)="onFilter($event)"></app-filter>
   </mat-card-actions>
-  <mat-card-content>
-    <app-table [dataSource]="dataSource" (onDeleteEvent)="onDelete($event)"></app-table>
-  </mat-card-content>
   <mat-card-actions>
     <app-input-form (onCreateEvent)="onCreate($event)"></app-input-form>
   </mat-card-actions>
+  <mat-card-content>
+    <app-table [dataSource]="dataSource" (onDeleteEvent)="onDelete($event)" (onEditEvent)="onEdit($event)" ></app-table>
+  </mat-card-content>
+
 </mat-card>

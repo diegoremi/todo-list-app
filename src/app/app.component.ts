@@ -3,8 +3,9 @@ import { MatTableDataSource } from '@angular/material/table';
 
 // Store
 import { Store } from '@ngrx/store';
-import { loadTodos, createTodo, deleteTodo } from './store/todo.actions'
+import { loadTodos, createTodo, deleteTodo, editTodo } from './store/todo.actions'
 import { selectAllTodos } from './store/todo.selector';
+import { Todo } from './interfaces/todo.interface';
 
 @Component({
   selector: 'app-root',
@@ -22,19 +23,35 @@ export class AppComponent {
       .subscribe(todosData => this.dataSource.data = todosData.todos);
   }
 
+  ngOnInit(): void {
+    this.dataSource.filterPredicate = (data: any, filter: string | null) => !filter || data.completed.toString() == filter;
+  }
+
   ngOnDestroy(): void {
     this.dataSourceSubscription.unsubscribe();
   }
 
-  public onDelete(element: {id:string}) {
-    this.store.dispatch(deleteTodo({ id: element.id }));
+  public onDelete(todo: {id:string}) {
+    this.store.dispatch(deleteTodo({ id: todo.id }));
+  }
+
+  public onEdit(todo: Todo){
+    this.store.dispatch(editTodo(todo))
   }
 
   public onCreate(todo: {title: string, description:string, completed: boolean}) {
     this.store.dispatch(createTodo(todo));
   }
 
-  public onFilter(characters: string){
-    this.dataSource.filter = characters.trim().toLowerCase();
+  public onFilter(status: string){
+    if(status === 'Completed'){
+      this.dataSource.filter = "true";
+    } else if (status === 'Active'){
+      this.dataSource.filter = "false";
+    } else {
+      this.dataSource.filter = "";
+    }
+
+    // this.dataSource.filter = characters.trim().toLowerCase();
   }
 }

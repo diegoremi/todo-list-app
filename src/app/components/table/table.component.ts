@@ -1,6 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { Todo } from '../../interfaces/todo.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 
 
 @Component({
@@ -11,11 +14,32 @@ import { Todo } from '../../interfaces/todo.interface';
 export class TableComponent {
   @Input() dataSource = new MatTableDataSource();
   @Output() onDeleteEvent = new EventEmitter<{id: string}>
+  @Output() onEditEvent = new EventEmitter<Todo>
 
-  displayedColumns: string[] = ['name', 'description', 'delete'];
+  displayedColumns: string[] = ['title', 'description', 'status', 'status-check', 'delete', 'edit'];
+  selection = new SelectionModel<Todo>(true, []);
+
+  constructor(public dialog: MatDialog){}
 
   public onDelete(element: Todo) {
     this.onDeleteEvent.emit({ id: element.id })
   }
 
+  public onEdit(element: Todo){
+    this.onEditEvent.emit({...element, title: element.title, description: element.description})
+  }
+
+  public onTodoCompleted(element: Todo) {
+    this.onEditEvent.emit({...element, completed: !element.completed})
+  }
+
+  public openDialog(element: Todo): void {
+    const dialogRef = this.dialog.open(EditDialogComponent, {
+      data: element
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.onEdit({...element, title: result.title, description: result.description});
+    });
+  }
 }

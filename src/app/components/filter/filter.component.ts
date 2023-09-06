@@ -12,7 +12,6 @@ export class FilterComponent {
   options: string[] = ['All', 'Active', 'Completed'];
 
   public onFilter() {
-    console.log(this.selectedOption);
     this.onFilterEvent.emit(this.selectedOption);
   }
 }
