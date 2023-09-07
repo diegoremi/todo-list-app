@@ -17,7 +17,9 @@ export const initialState: TodosState = {
 
 export const todosReducer = createReducer(
     initialState,
-    on(createTodo, (state, { title, description, completed }) => ({...state, todos: [...state.todos, { id: uuidv4(), title, description, completed }]})),
+    on(createTodo, (state, { title, description, completed }) => ({...state, todos: state.todos.some((todo) => {
+     return todo.title === title || todo.description === description
+    }) ? state.todos : [...state.todos, { id: uuidv4(), title, description, completed }]})),
     on(editTodo, (state, { id, title, description, completed }) => ({...state, todos: state.todos.map((todo) =>
       todo.id === id ? { ...todo, title, description, completed } : todo)})),
     on(deleteTodo, (state, { id }) => ({...state, todos: state.todos.filter((todo) => todo.id !== id)})),

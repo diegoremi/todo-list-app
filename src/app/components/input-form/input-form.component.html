@@ -15,3 +15,4 @@
 </mat-form-field>
 
 <button class="action-button" (click)="onCreate()" mat-raised-button color="accent">Create</button>
+<span *ngIf="!titleValue || !descriptionValue" class="error">{{errorMessage}}</span>

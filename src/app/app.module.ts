@@ -18,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSortModule } from '@angular/material/sort';
 
 // NGRX
 import { StoreModule } from '@ngrx/store';
@@ -46,6 +47,7 @@ import { EditDialogComponent } from './components/edit-dialog/edit-dialog.compon
     MatCardModule,
     MatRadioModule,
     MatCheckboxModule,
+    MatSortModule,
     StoreModule.forRoot({ todos: fromTodos.reducer }),
     EffectsModule.forRoot([TodosEffects]),
     StoreDevtoolsModule.instrument(),
