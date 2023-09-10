@@ -28,13 +28,20 @@ import { TodosEffects } from './store/todo.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EditDialogComponent } from './components/edit-dialog/edit-dialog.component';
 
+import { AngularFireModule } from '@angular/fire/compat'
+import { AngularFireAuthModule } from '@angular/fire/compat/auth'
+import { GoogleAuthProvider } from "firebase/auth"
+import { environment } from 'environment/environment';
+import { LoginComponent } from './components/login/login.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     InputFormComponent,
     FilterComponent,
     TableComponent,
-    EditDialogComponent
+    EditDialogComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -51,9 +58,11 @@ import { EditDialogComponent } from './components/edit-dialog/edit-dialog.compon
     StoreModule.forRoot({ todos: fromTodos.reducer }),
     EffectsModule.forRoot([TodosEffects]),
     StoreDevtoolsModule.instrument(),
-    MatDialogModule
+    MatDialogModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
   ],
-  providers: [],
+  providers: [GoogleAuthProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

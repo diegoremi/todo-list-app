@@ -9,5 +9,8 @@
   <mat-card-content>
     <app-table [dataSource]="dataSource" (onDeleteEvent)="onDelete($event)" (onEditEvent)="onEdit($event)" ></app-table>
   </mat-card-content>
+  <mat-card-actions>
+    <app-login></app-login>
+  </mat-card-actions>
 
 </mat-card>
